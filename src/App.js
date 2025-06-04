@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 // Icons (using simple SVG since we can't import lucide-react)
 const SearchIcon = () => (
@@ -126,7 +127,7 @@ const LinkedInAnalyzer = () => {
 
   const fetchKnowledgeItems = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/knowledge');
+      const response = await fetch(`${BASE_URL}/api/knowledge`);
       if (response.ok) {
         const data = await response.json();
         setKnowledgeItems(data.items || []);
@@ -138,7 +139,7 @@ const LinkedInAnalyzer = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/knowledge/stats');
+      const response = await fetch(`${BASE_URL}/api/knowledge/stats`);
       if (response.ok) {
         const data = await response.json();
         setStats(data);
@@ -162,7 +163,7 @@ const LinkedInAnalyzer = () => {
     setUploadSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3001/api/knowledge/upload', {
+      const response = await fetch(`${BASE_URL}/api/knowledge/upload`, {
         method: 'POST',
         body: formData
       });
@@ -214,7 +215,7 @@ const LinkedInAnalyzer = () => {
   const handleDeleteKnowledge = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        const response = await fetch(`http://localhost:3001/api/knowledge/${id}`, {
+        const response = await fetch(`${BASE_URL}/api/knowledge/${id}`, {
           method: 'DELETE'
         });
         
@@ -263,7 +264,7 @@ const LinkedInAnalyzer = () => {
     setAnalysisProgress({ progress: 0, stage: 'Starting analysis...' });
 
     try {
-      const response = await fetch('http://localhost:3001/api/analyze', {
+      const response = await fetch(`${BASE_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ linkedinUrl })
@@ -284,7 +285,7 @@ const LinkedInAnalyzer = () => {
 
   const checkProgress = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/analyze/${id}`);
+      const response = await fetch(`${BASE_URL}/api/analyze/${id}`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to check progress');
