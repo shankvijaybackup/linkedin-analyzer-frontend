@@ -16,7 +16,7 @@
         "pragma": "no-cache",
         "expires": "0"
       },
-      "dest": "https://your-backend.onrender.com/api/$1"
+      "dest": "https://linkedin-analyzer-backend-rk6a.onrender.com/api/$1"
     },
     {
       "src": "/(.*)",
@@ -24,6 +24,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "@linkedin-analyzer-api-url"
+    "REACT_APP_API_URL": "https://linkedin-analyzer-backend-rk6a.onrender.com"
   }
 }
