@@ -3,8 +3,6 @@ import OutreachMessages from './components/OutreachMessages';
 
 const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
-// All your SVG icons remain unchanged...
-
 const LinkedInAnalyzer = () => {
   const [linkedinUrl, setLinkedinUrl] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -14,63 +12,7 @@ const LinkedInAnalyzer = () => {
   const [copied, setCopied] = useState({});
   const [activeTab, setActiveTab] = useState('analyze');
   const [profileData, setProfileData] = useState(null);
-  const [strategicSummary, setStrategicSummary] = useState('');
   const [outreachMessages, setOutreachMessages] = useState([]);
-  const [companyData, setCompanyData] = useState(null);
-  const [metrics, setMetrics] = useState(null);
-  const [knowledgeTab, setKnowledgeTab] = useState('upload');
-  const [files, setFiles] = useState([]);
-  const [knowledgeItems, setKnowledgeItems] = useState([]);
-  const [stats, setStats] = useState({});
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('general');
-  const [dragActive, setDragActive] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-  const fileInputRef = useRef(null);
-
-  const categories = [
-    { id: 'all', label: 'All Categories' },
-    { id: 'outreach_templates', label: 'Outreach Templates' },
-    { id: 'product_information', label: 'Product Information' },
-    { id: 'industry_insights', label: 'Industry Insights' },
-    { id: 'competitor_analysis', label: 'Competitor Analysis' },
-    { id: 'case_studies', label: 'Case Studies' },
-    { id: 'sales_playbooks', label: 'Sales Playbooks' },
-    { id: 'technical_documentation', label: 'Technical Docs' },
-    { id: 'general', label: 'General' }
-  ];
-
-  useEffect(() => {
-    if (activeTab === 'knowledge') {
-      fetchKnowledgeItems();
-      fetchStats();
-    }
-  }, [activeTab]);
-
-  const fetchKnowledgeItems = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/knowledge`);
-      if (response.ok) {
-        const data = await response.json();
-        setKnowledgeItems(data.items || []);
-      }
-    } catch (error) {
-      console.error('Error fetching knowledge items:', error);
-    }
-  };
-
-  const fetchStats = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/knowledge/stats`);
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data);
-      }
-    } catch (error) {
-      console.error('Error fetching stats:', error);
-    }
-  };
 
   const analyzeProfile = async () => {
     if (!linkedinUrl) {
@@ -119,10 +61,7 @@ const LinkedInAnalyzer = () => {
 
       if (result.status === 'completed') {
         setProfileData(result.data.profile);
-        setStrategicSummary(result.data.strategicSummary);
         setOutreachMessages(result.data.outreachMessages);
-        setCompanyData(result.data.company);
-        setMetrics(result.data.metrics);
         setIsAnalyzing(false);
         setActiveTab('results');
       } else if (result.status === 'error') {
@@ -171,16 +110,7 @@ const LinkedInAnalyzer = () => {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-      {/* Header remains unchanged */}
-
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
-        {/* Tab Navigation remains unchanged */}
-
-        {/* Analysis Tab remains unchanged */}
-
-        {/* Results Tab remains unchanged */}
-
-        {/* Outreach Tab - Refactored to use OutreachMessages.js */}
         {activeTab === 'outreach' && outreachMessages.length > 0 && (
           <OutreachMessages
             profileName={profileData?.name}
@@ -189,10 +119,6 @@ const LinkedInAnalyzer = () => {
             handleCopy={handleCopy}
           />
         )}
-
-        {/* Knowledge Base Tab remains unchanged */}
-
-        {/* No Results State remains unchanged */}
       </div>
     </div>
   );
